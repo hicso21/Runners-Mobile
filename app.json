@@ -1,0 +1,62 @@
+{
+	"expo": {
+		"name": "delaf",
+		"slug": "delaf",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/DELAF.png",
+		"scheme": "myapp",
+		"userInterfaceStyle": "automatic",
+		"splash": {
+			"image": "./assets/DELAF.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#000000"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"infoPlist": {
+				"UIBackgroundModes": ["audio"]
+			},
+			"bundleIdentifier": "com.hicso.delaf.ios"
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/DELAF.png",
+				"backgroundColor": "#f6f6f6"
+			},
+			"softwareKeyboardLayoutMode": "pan",
+			"intentFilters": [
+				{
+					"action": "VIEW",
+					"data": [
+						{
+							"scheme": "myapp",
+							"host": "checkout",
+							"pathPrefix": "/congrats"
+						}
+					],
+					"category": ["BROWSABLE", "DEFAULT"]
+				}
+			],
+			"package": "com.hicso.delaf"
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./assets/DELAF.png"
+		},
+		"plugins": ["expo-router"],
+		"experiments": {
+			"typedRoutes": true
+		},
+		"extra": {
+			"router": {
+				"origin": false
+			},
+			"eas": {
+				"projectId": "866e5b9c-495c-414c-88db-76acddb27ce7"
+			}
+		}
+	}
+}
