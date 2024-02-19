@@ -25,34 +25,18 @@ const RenderItem = ({ item }) => {
 					borderRadius: 10,
 				}}
 			>
-				<Text style={styles.itemDescription}>{item?.description}</Text>
+				<Text style={styles.itemDescription}>{item.data?.description}</Text>
 			</View>
 		</View>
 	);
 };
 
 export default function () {
-	const [tips, setTips] = useState([
-		{
-			description:
-				'La cadencia o cantidad de pasos por minuto es sumamente importante que este en un promedio de 180 para asi disminuir el impacto, caer debajo nuestro y mejorar nuestra eficiencia.',
-		},
-		{
-			description:
-				'SEGUIR UNA ADECUADA LINEA DE CARGAS DE ENTRENAMIENTO ES VITAL PARA CREAR CORRECTOS ESTIMULOS Y CAER EN UNA SOBRECARGA.',
-		},
-		{
-			description:
-				'ADAPTAR SIEMPRE NUESTRO ESFUERZO AL ENTORNO, YA QUE LA TEMPERATURA, LA ALTITUD, LA HUMEDAD, LA SUPERFICIE O EL VIENTO PUEDEN AFECTARNOS SI NO LOS TENEMOS EN CUENTA.',
-		},
-		{
-			description:
-				'CONTROLAR LA INGESTA DE AGUA, MINERALES E HIDRATOS ES IMPORTANTE PARA PODER MANTENER UN RENDIMIENTO CONSTANTE A TRAVES DEL TIEMPO.',
-		},
-	]);
+	const [tips, setTips] = useState([]);
 
 	const fetch = async () => {
 		const { data, error } = await getTips();
+		console.log('This', data)
 		if (error)
 			return Toast.show({
 				type: 'error',
@@ -99,7 +83,7 @@ const styles = StyleSheet.create({
 		textTransform: 'lowercase',
 	},
 	itemDescription: {
-		textAlign: 'left',
+		textAlign: 'center',
 		fontSize: 28,
 		color: '#000',
 	},

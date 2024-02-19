@@ -21,7 +21,7 @@ const pathToExclude = ['/login', '/register', '/prices', '/marchView', '/redirec
 export default function RootLayout() {
 	const path = usePathname();
 	const { handleURLCallback } = useStripe();
-	usePreventScreenCapture();
+	// usePreventScreenCapture();
 
 	const handleDeepLink = useCallback(
 		async (url) => {

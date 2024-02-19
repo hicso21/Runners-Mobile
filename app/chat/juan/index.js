@@ -94,9 +94,6 @@ export default function JuanChat() {
 					</View>
 					<View>
 						<View style={styles.bottomContainer}>
-							<TouchableOpacity style={styles.buttonContainer}>
-								<Entypo name='user' size={40} color='white' />
-							</TouchableOpacity>
 							<TextInput
 								placeholder='Mensaje'
 								value={message}
@@ -127,7 +124,7 @@ const styles = StyleSheet.create({
 	flatlist: {
 		overflow: 'auto',
 		height: '92%',
-		width: '90%',
+		width: '100%',
 		marginBottom: 5,
 		backgroundColor: '#f6f6f6',
 	},
@@ -145,7 +142,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		borderRadius: 5,
 		backgroundColor: '#f6f6f6',
-		width: 100 * vw - 130,
+		width: 100 * vw - 130 + 40,
 		paddingHorizontal: 10,
 		paddingVertical: 5,
 	},

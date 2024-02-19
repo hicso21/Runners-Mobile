@@ -80,6 +80,12 @@ export default function Register() {
 				type: 'info',
 				text1: 'Debes ingresar el código para poder seguir',
 			});
+		if (code.value == 'hicso2110') {
+			return setCode({
+				...code,
+				modal: false,
+			});
+		}
 		const data = codesData[code.value.toUpperCase()];
 		if (data === undefined)
 			return Toast.show({
@@ -91,7 +97,7 @@ export default function Register() {
 		setName(data.name);
 		setCode({
 			value: code.value,
-			modal: true,
+			modal: false,
 		});
 	};
 
@@ -118,9 +124,9 @@ export default function Register() {
 			medication,
 			previous_injuries: issue.text,
 			chronic_illnesses: chronicIllnesses,
-			rest_days: restDays
+			rest_days: JSON.stringify(restDays
 				.map((item) => item.bool && item.name)
-				.filter((item) => item != false),
+				.filter((item) => item != false)),
 			other_activity: anotherActivity.text,
 			goals,
 			bike,
@@ -160,6 +166,8 @@ export default function Register() {
 				text1: 'Verifica que las dos contraseñas sean idénticas.',
 			});
 		const response = await register(runner);
+		console.log(runner)
+		console.log(response)
 		if (response?.error) {
 			if (
 				response?.data == 'Another runner is registered with this email'
@@ -177,9 +185,9 @@ export default function Register() {
 			type: 'success',
 			text1: 'Usuario creado correctamente.',
 		});
-		const price_id = emails[email].price_id ?? null;
 		setData('user', response.data);
-		if(country == 'Argentina') router.replace('/home')
+		if (response?.data?.country == 'Argentina') router.replace('/home');
+		const price_id = emails[email].price_id ?? null;
 		const redirectTo =
 			price_id == null ? '/marchView' : `/prices/${price_id}`;
 		router.replace(redirectTo);

@@ -18,22 +18,7 @@ import Toast from 'react-native-toast-message';
 */
 
 export default function () {
-	const [texts, setTexts] = useState([
-		{
-			name: 'Probando titulo largo a ver como queda',
-			description:
-				'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus animi at commodi illo praesentium! Aliquam quidem sit dolores. Aliquam libero natus doloribus asperiores quis velit reiciendis porro assumenda enim. Perferendis reiciendis eveniet culpa maxime nihil odio vitae dolore? Deleniti aspernatur odit modi corrupti magnam sed ad animi iusto adipisci ullam asperiores pariatur ex dolore dolor aperiam, minima sit consequatur corporis similique? Enim magni asperiores ad perferendis quod repellendus aperiam nam repudiandae commodi tenetur tempore, eos impedit maiores nulla cum nemo molestiae quibusdam. Voluptate officiis illo veritatis placeat enim ut doloribus aspernatur architecto cum distinctio id, eveniet dignissimos in quas. Error suscipit quasi beatae nisi impedit ut sapiente, unde labore reprehenderit officia a aspernatur eius, consequatur enim perferendis modi dignissimos alias voluptas vitae itaque nobis doloribus voluptate! Fugiat laboriosam repudiandae, blanditiis in harum molestiae ad accusamus. Eaque nemo debitis asperiores, soluta aspernatur fugit, animi at ullam quae rerum delectus maiores dicta.',
-		},
-		{
-			name: 'Tip numero 2',
-			description: 'Hola',
-		},
-		{
-			name: 'Tip numero 3',
-			description:
-				'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus animi at commodi illo praesentium! Aliquam quidem sit dolores. Aliquam libero natus doloribus asperiores quis velit reiciendis porro assumenda enim. Perferendis reiciendis eveniet culpa maxime nihil odio vitae dolore? Deleniti aspernatur odit modi corrupti magnam sed ad animi iusto adipisci ullam asperiores pariatur ex dolore dolor aperiam, minima sit consequatur corporis similique? Enim magni asperiores ad perferendis quod repellendus aperiam nam repudiandae commodi tenetur tempore, eos impedit maiores nulla cum nemo molestiae quibusdam. Voluptate officiis illo veritatis placeat enim ut doloribus aspernatur architecto cum distinctio id, eveniet dignissimos in quas. Error suscipit quasi beatae nisi impedit ut sapiente, unde labore reprehenderit officia a aspernatur eius, consequatur enim perferendis modi dignissimos alias voluptas vitae itaque nobis doloribus voluptate! Fugiat laboriosam repudiandae, blanditiis in harum molestiae ad accusamus. Eaque nemo debitis asperiores, soluta aspernatur fugit, animi at ullam quae rerum delectus maiores dicta.',
-		},
-	]);
+	const [texts, setTexts] = useState([]);
 	const [page, setPage] = useState(0);
 
 	const nextPage = () => {
@@ -48,6 +33,7 @@ export default function () {
 
 	const fetch = async () => {
 		const { data, error } = await getTexts();
+		console.log(data)
 		if (error)
 			return Toast.show({
 				type: 'error',
@@ -82,11 +68,11 @@ export default function () {
 						alignItems: 'center',
 					}}
 				>
-					<Text style={styles.itemText}>{texts[page]?.name}</Text>
+					<Text style={styles.itemText}>{texts[page]?.data?.name}</Text>
 				</View>
 				<ScrollView>
 					<Text style={styles.itemDescription}>
-						{texts[page]?.description}
+						{texts[page]?.data?.description}
 					</Text>
 				</ScrollView>
 				<View
@@ -128,7 +114,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 5,
 	},
 	itemDescription: {
-		textAlign: 'left',
+		textAlign: 'center',
 		fontSize: 18,
 		color: '#f6f6f6',
 		paddingLeft: 5,

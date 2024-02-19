@@ -6,7 +6,7 @@ import {
 	ScrollView,
 	StyleSheet,
 	Text,
-	View
+	View,
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Toast from 'react-native-toast-message';
@@ -22,11 +22,13 @@ import getVideos from '../../../utils/functions/api/get/getVideos';
 
 const videosArray = [
 	{
-		name: 'Toco y me voy - Nahuel Pennisi',
-		src: toco_y_me_voy,
-		description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-	Reprehenderit ducimus rerum officia nemo recusandae ex quia quas minima molestiae nulla, mollitia necessitatibus, aspernatur, et doloribus hic illo magnam nam aperiam ea consequatur.
-	Magnam fugiat nihil expedita repellendus soluta odit aut adipisci repellat modi suscipit doloremque unde dolorum amet, voluptatibus consequuntur.`,
+		data: {
+			name: 'Toco y me voy - Nahuel Pennisi',
+			src: toco_y_me_voy,
+			description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+			Reprehenderit ducimus rerum officia nemo recusandae ex quia quas minima molestiae nulla, mollitia necessitatibus, aspernatur, et doloribus hic illo magnam nam aperiam ea consequatur.
+			Magnam fugiat nihil expedita repellendus soluta odit aut adipisci repellat modi suscipit doloremque unde dolorum amet, voluptatibus consequuntur.`,
+		},
 	},
 ];
 
@@ -53,7 +55,7 @@ const ModalContent = ({ open }) => {
 
 const RenderItem = ({ item }) => {
 	const [status, setStatus] = useState({});
-	const [source, setSource] = useState(item?.src);
+	const [source, setSource] = useState(item?.data?.src);
 	const video = useRef(null);
 	const [open, setOpen] = useState(false);
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -74,7 +76,7 @@ const RenderItem = ({ item }) => {
 	return (
 		<>
 			<ModalContent open={open} />
-			{item?.name ? (
+			{item?.data?.name ? (
 				<View style={styles.itemContainer}>
 					<Video
 						onLoadStart={() => {
@@ -94,13 +96,13 @@ const RenderItem = ({ item }) => {
 							setStatus(() => status)
 						}
 					/>
-					<Text style={styles.itemText}>{item?.name}</Text>
+					<Text style={styles.itemText}>{item?.data?.name}</Text>
 					<View
 						style={{ maxHeight: `calc(100% - 41 - ${100 * vw})` }}
 					>
 						<ScrollView style={{ width: '100%', height: '100%' }}>
 							<Text style={styles.itemDescription}>
-								{item?.description}
+								{item?.data?.description}
 							</Text>
 						</ScrollView>
 					</View>
@@ -108,10 +110,10 @@ const RenderItem = ({ item }) => {
 			) : (
 				<View style={styles.itemContainer}>
 					<View style={styles.video} />
-					<Text style={styles.itemText}>{item?.name}</Text>
+					<Text style={styles.itemText}>{item?.data?.name}</Text>
 					<ScrollView>
 						<Text style={styles.itemDescription}>
-							{item?.description}
+							{item?.data?.description}
 						</Text>
 					</ScrollView>
 				</View>

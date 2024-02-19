@@ -1,23 +1,22 @@
+import { Entypo } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
+import { useNavigation } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
 	ActivityIndicator,
-	Alert,
 	Image,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
 	View,
 } from 'react-native';
-import getAudios from '../../../utils/functions/api/get/getAudios';
-import { vh, vw } from '../../../styles/dimensions/dimensions';
-import audioSource from '../../../assets/test.wav';
 import Carousel from 'react-native-reanimated-carousel';
-import { Audio } from 'expo-av';
-import { Entypo } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import logo from '../../../assets/DELAF.png';
+import audioSource from '../../../assets/test.wav';
+import { vh, vw } from '../../../styles/dimensions/dimensions';
+import getAudios from '../../../utils/functions/api/get/getAudios';
 import fromMillisecondsToTime from '../../../utils/functions/fromMillisecondsToTime';
-import { useNavigation } from 'expo-router';
 
 /* 
 		name: String,
@@ -129,12 +128,12 @@ const RenderItem = ({ index, audios }) => {
 	}, [index]);
 
 	useEffect(() => {
-		const unsubscribe = navigation.addListener('blur', () => {
-			// Detener la reproducción del video
-			sound?.stopAsync();
-		});
-
-		return unsubscribe;
+		return sound
+			? () => {
+					console.log('Deteniendo sonido');
+					sound.unloadAsync();
+			  }
+			: undefined;
 	}, [sound]);
 
 	return (
