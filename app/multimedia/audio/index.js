@@ -1,7 +1,7 @@
 import { Entypo } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
-import { useNavigation } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useFocusEffect, useNavigation } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
 import {
 	ActivityIndicator,
 	Image,
@@ -119,9 +119,11 @@ const RenderItem = ({ index, audios }) => {
 		setOpen(false);
 	};
 
-	useEffect(() => {
-		fetch();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			fetch();
+		}, [])
+	);
 
 	useEffect(() => {
 		sound?.stopAsync();

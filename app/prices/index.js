@@ -1,16 +1,11 @@
-import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useCallback, useState } from 'react';
 import {
 	ActivityIndicator,
 	Button,
-	Image,
-	ScrollView,
 	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
+	View
 } from 'react-native';
-import src from '../../assets/profile.jpg';
 import StatusBar from '../../components/StatusBar';
 import { vw } from '../../styles/dimensions/dimensions';
 import getPrices from '../../utils/functions/api/get/getPrices';
@@ -26,9 +21,11 @@ export default function Payment() {
 		setIsLoading(false);
 	};
 
-	useEffect(() => {
-		fetch();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			fetch();
+		}, [])
+	);
 
 	return (
 		<>
@@ -67,7 +64,7 @@ export default function Payment() {
 								);
 							})}
 						</ScrollView> */}
-                        
+
 						<Button
 							onPress={() => router.replace('/login')}
 							title='<-'

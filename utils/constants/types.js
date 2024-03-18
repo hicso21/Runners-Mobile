@@ -1,11 +1,12 @@
 const types = [
 	{ name: 'Carrera', value: 'running' },
+	{ name: 'Técnica de carrera', value: 'running_technique' },
 	{ name: 'Bici', value: 'bike' },
 	{ name: 'Funcional', value: 'functional' },
 	{ name: 'Elíptica', value: 'elliptical' },
 	{ name: 'Calentamiento', value: 'heating' },
 	{ name: 'Enfriamiento', value: 'cooling' },
-	{ name: 'Otros', value: 'others' },
+	{ name: 'Descanso', value: 'rest' },
 ];
 
 export const typesDefinitions = {
@@ -15,7 +16,7 @@ export const typesDefinitions = {
 	elliptical: 'Elíptica',
 	heating: 'Calentamiento',
 	cooling: 'Enfriamiento',
-	others: 'Otros',
+	rest: 'Descanso',
 }
 
 export default types;

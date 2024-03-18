@@ -1,4 +1,5 @@
 import { useFocusEffect, useRouter } from 'expo-router';
+import { useCallback } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import logo from '../../assets/DELAF.png';
 import getData from '../../utils/AsyncStorage/getData';
@@ -8,15 +9,19 @@ export default function Temp() {
 
 	const fetch = async () => {
 		const user = await getData('user');
-		if (user != null) router.replace('/home');
+		console.log('redirect => ', user);
+		if (user?.email) router.replace('/home');
+		else router.replace('/login');
 	};
 
 	const redirectToRegister = () => router.replace('/register');
 	const redirectToMarchView = () => router.replace('/marchView');
 
-	useFocusEffect(() => {
-		fetch();
-	});
+	useFocusEffect(
+		useCallback(() => {
+			fetch();
+		}, [])
+	);
 
 	return (
 		<View

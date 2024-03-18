@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import getTips from '../../../utils/functions/api/get/getTips';
-import { vh, vw } from '../../../styles/dimensions/dimensions';
 import Carousel from 'react-native-reanimated-carousel';
 import Toast from 'react-native-toast-message';
+import { vh, vw } from '../../../styles/dimensions/dimensions';
+import getTips from '../../../utils/functions/api/get/getTips';
 
 const RenderItem = ({ item }) => {
 	return (
@@ -25,7 +26,9 @@ const RenderItem = ({ item }) => {
 					borderRadius: 10,
 				}}
 			>
-				<Text style={styles.itemDescription}>{item.data?.description}</Text>
+				<Text style={styles.itemDescription}>
+					{item.data?.description}
+				</Text>
 			</View>
 		</View>
 	);
@@ -36,7 +39,7 @@ export default function () {
 
 	const fetch = async () => {
 		const { data, error } = await getTips();
-		console.log('This', data)
+		console.log('This', data);
 		if (error)
 			return Toast.show({
 				type: 'error',
@@ -46,9 +49,11 @@ export default function () {
 		else Toast.show({ type: 'info', text1: 'Aún no hay videos' });
 	};
 
-	useEffect(() => {
-		fetch();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			fetch();
+		}, [])
+	);
 
 	return (
 		<View

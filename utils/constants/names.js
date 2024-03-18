@@ -7,16 +7,20 @@ const names = {
 		{ name: 'Piramidales', value: 'pyramid' },
 		{ name: 'Progresivos', value: 'progresive' },
 	],
+	running_technique: [
+		{ name: 'Técnica de carrera', value: 'running_technique' },
+	],
 	bike: [{ name: 'Bici', value: 'bike' }],
 	functional: [{ name: 'Funcional', value: 'functional' }],
 	elliptical: [{ name: 'Eliptica', value: 'elliptical' }],
 	heating: [{ name: 'Calentamiento', value: 'heating' }],
 	cooling: [{ name: 'Enfriamiento', value: 'cooling' }],
-	others: [{ name: 'Otros', value: 'others' }],
+	rest: [{ name: 'Descanso', value: 'rest' }],
 };
 
 export const namesDefinitions = {
 	running: 'Carrera',
+	running_technique: 'Técnica de carrera',
 	series: 'Series',
 	rythm_change: 'Cambio de Ritmo',
 	fund: 'Fondos',
@@ -28,7 +32,7 @@ export const namesDefinitions = {
 	elliptical: 'Eliptica',
 	heating: 'Calentamiento',
 	cooling: 'Enfriamiento',
-	others: 'Otros',
+	rest: 'Descanso',
 };
 
 export default names;

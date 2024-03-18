@@ -1,6 +1,6 @@
 import { ResizeMode, Video } from 'expo-av';
-import { useNavigation } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useFocusEffect, useNavigation } from 'expo-router';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
 	ActivityIndicator,
 	ScrollView,
@@ -61,17 +61,19 @@ const RenderItem = ({ item }) => {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const navigation = useNavigation();
 
-	useEffect(() => {
-		if (Object.keys(status).length == 0) return;
-		// status.durationMillis => duración total del video en ms
-		// status.positionMillis => cantidad de ms que va reproduciendo el video
-		const unsubscribe = navigation.addListener('blur', () => {
-			// Detener la reproducción del video
-			video?.current?.stopAsync();
-		});
+	useFocusEffect(
+		useCallback(() => {
+			if (Object.keys(status).length == 0) return;
+			// status.durationMillis => duración total del video en ms
+			// status.positionMillis => cantidad de ms que va reproduciendo el video
+			const unsubscribe = navigation.addListener('blur', () => {
+				// Detener la reproducción del video
+				video?.current?.stopAsync();
+			});
 
-		return unsubscribe;
-	}, [status]);
+			return unsubscribe;
+		}, [status])
+	);
 
 	return (
 		<>
@@ -123,7 +125,7 @@ const RenderItem = ({ item }) => {
 };
 
 export default function () {
-	const [videos, setVideos] = useState([...videosArray]);
+	const [videos, setVideos] = useState([]);
 	const [currentItem, setCurrentItem] = useState(0);
 
 	const fetch = async () => {
@@ -137,26 +139,39 @@ export default function () {
 		else Toast.show({ type: 'info', text1: 'Aún no hay videos' });
 	};
 
-	useEffect(() => {
-		fetch();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			fetch();
+		}, [])
+	);
 
 	return (
 		<View style={styles.view}>
-			<Carousel
-				width={100 * vw}
-				height={`calc(${100 * vh} - ${6.2 * vh})`}
-				data={videos}
-				pagingEnabled={true}
-				onSnapToItem={(index) => setCurrentItem(index)}
-				renderItem={({ item, index }) =>
-					currentItem == index ? (
-						<RenderItem item={item} />
-					) : (
-						<RenderItem />
-					)
-				}
-			/>
+			{videos.length > 0 ? (
+				<Carousel
+					width={100 * vw}
+					height={`calc(${100 * vh} - ${6.2 * vh})`}
+					data={videos}
+					pagingEnabled={true}
+					onSnapToItem={(index) => setCurrentItem(index)}
+					renderItem={({ item, index }) =>
+						currentItem == index ? (
+							<RenderItem item={item} />
+						) : (
+							<RenderItem />
+						)
+					}
+				/>
+			) : (
+				<Text
+					style={{
+						fontSize: 22,
+						color: '#f6f6f6',
+					}}
+				>
+					Aún no hay videos
+				</Text>
+			)}
 		</View>
 	);
 }
@@ -166,6 +181,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+		backgroundColor: '#000',
 	},
 	itemContainer: {
 		flex: 1,

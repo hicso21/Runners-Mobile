@@ -15,42 +15,47 @@ import routes from '../utils/constants/routes.js';
 import stripeKeys from '../utils/constants/stripeKeys.js';
 import { usePreventScreenCapture } from 'expo-screen-capture';
 
-const pathToExclude = ['/login', '/register', '/prices', '/marchView', '/redirect'];
+const pathToExclude = [
+	'/login',
+	'/register',
+	'/prices',
+	'/marchView',
+	'/redirect',
+	'/recovery'
+];
 
+LogBox.ignoreLogs(['new NativeEventEmitter']);
 
 export default function RootLayout() {
 	const path = usePathname();
-	const { handleURLCallback } = useStripe();
 	// usePreventScreenCapture();
 
-	const handleDeepLink = useCallback(
-		async (url) => {
-			if (url) {
-				const stripeHandled = await handleURLCallback(url);
-				if (stripeHandled) {
-					// This was a Stripe URL - you can return or add extra handling here as you see fit
-				} else {
-					// This was NOT a Stripe URL – handle as you normally would
-				}
-			}
-		},
-		[handleURLCallback]
-	);
-
-	const getUrlAsync = async () => {
-		const initialUrl = await Linking.getInitialURL();
-		handleDeepLink(initialUrl);
-	};
-
-	useEffect(() => {
-		getUrlAsync();
-
-		const deepLinkListener = Linking.addEventListener('url', (event) => {
-			handleDeepLink(event.url);
-		});
-
-		return () => deepLinkListener.remove();
-	}, [handleDeepLink]);
+	/* Stripe */
+	// const { handleURLCallback } = useStripe();
+	// const handleDeepLink = useCallback(
+	// 	async (url) => {
+	// 		if (url) {
+	// 			const stripeHandled = await handleURLCallback(url);
+	// 			if (stripeHandled) {
+	// 				// This was a Stripe URL - you can return or add extra handling here as you see fit
+	// 			} else {
+	// 				// This was NOT a Stripe URL – handle as you normally would
+	// 			}
+	// 		}
+	// 	},
+	// 	[handleURLCallback]
+	// );
+	// const getUrlAsync = async () => {
+	// 	const initialUrl = await Linking.getInitialURL();
+	// 	handleDeepLink(initialUrl);
+	// };
+	// useEffect(() => {
+	// 	getUrlAsync();
+	// 	const deepLinkListener = Linking.addEventListener('url', (event) => {
+	// 		handleDeepLink(event.url);
+	// 	});
+	// 	return () => deepLinkListener.remove();
+	// }, [handleDeepLink]);
 
 	useEffect(() => {
 		BackHandler.addEventListener('hardwareBackPress', () => true);
@@ -60,10 +65,10 @@ export default function RootLayout() {
 		<>
 			<PaperProvider>
 				<Provider store={store}>
-					<StripeProvider
+					{/* <StripeProvider
 						publishableKey={stripeKeys.development_publishable_key}
 						merchantIdentifier='merchant.com.delaf'
-					>
+					> */}
 						<View style={styles.view}>
 							<StatusBar />
 							<Drawer
@@ -92,7 +97,7 @@ export default function RootLayout() {
 								path.includes(item)
 							) && <FooterNavigator />}
 						</View>
-					</StripeProvider>
+					{/* </StripeProvider> */}
 				</Provider>
 			</PaperProvider>
 			<Toast />

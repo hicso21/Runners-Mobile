@@ -1,14 +1,14 @@
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import {
-	Alert,
 	Linking,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
-	View,
+	View
 } from 'react-native';
-import { useEffect, useState } from 'react';
-import getData from '../../utils/AsyncStorage/getData';
 import Toast from 'react-native-toast-message';
+import getData from '../../utils/AsyncStorage/getData';
 
 const mainUrl = 'https://delaf.click/api/v1';
 
@@ -32,9 +32,11 @@ export default function Sync() {
 		setUserData(user);
 	};
 
-	useEffect(() => {
-		fetch();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			fetch();
+		}, [])
+	);
 
 	return (
 		<View style={styles.view}>

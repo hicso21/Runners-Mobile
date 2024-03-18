@@ -1,8 +1,7 @@
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
-	Alert,
-	Button,
 	Linking,
 	ScrollView,
 	StyleSheet,
@@ -12,22 +11,19 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
-import { Checkbox } from 'react-native-paper';
+import { Checkbox, Modal, Portal } from 'react-native-paper';
 import SelectDropdown from 'react-native-select-dropdown';
 import Toast from 'react-native-toast-message';
 import StatusBar from '../../components/StatusBar';
 import { vh, vw } from '../../styles/dimensions/dimensions';
-import brands from '../../utils/constants/brands';
-import countries from '../../utils/constants/countries';
-import { Modal, Portal } from 'react-native-paper';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import getAge from '../../utils/functions/getAge';
-import getPrices from '../../utils/functions/api/get/getPrices';
-import register from '../../utils/functions/api/post/register';
 import setData from '../../utils/AsyncStorage/setData';
-import colorRandomizer from '../../utils/functions/colorRandomizer';
-import emails from '../../utils/constants/emails';
+import brands from '../../utils/constants/brands';
 import codesData from '../../utils/constants/codesData';
+import countries from '../../utils/constants/countries';
+import emails from '../../utils/constants/emails';
+import register from '../../utils/functions/api/post/register';
+import colorRandomizer from '../../utils/functions/colorRandomizer';
+import getAge from '../../utils/functions/getAge';
 
 export default function Register() {
 	const [email, setEmail] = useState('');
@@ -124,9 +120,11 @@ export default function Register() {
 			medication,
 			previous_injuries: issue.text,
 			chronic_illnesses: chronicIllnesses,
-			rest_days: JSON.stringify(restDays
-				.map((item) => item.bool && item.name)
-				.filter((item) => item != false)),
+			rest_days: JSON.stringify(
+				restDays
+					.map((item) => item.bool && item.name)
+					.filter((item) => item != false)
+			),
 			other_activity: anotherActivity.text,
 			goals,
 			bike,
@@ -166,8 +164,6 @@ export default function Register() {
 				text1: 'Verifica que las dos contraseñas sean idénticas.',
 			});
 		const response = await register(runner);
-		console.log(runner)
-		console.log(response)
 		if (response?.error) {
 			if (
 				response?.data == 'Another runner is registered with this email'
@@ -227,14 +223,18 @@ export default function Register() {
 									}}
 								/>
 							))}
-							<Button
-								title='Listo'
-								color={'#000'}
+							<TouchableOpacity
+								style={{
+									borderRadius: 5,
+									backgroundColor: '#000',
+								}}
 								onPress={() => {
 									setModal(false);
 									setRestDaysSelected(true);
 								}}
-							/>
+							>
+								<Text style={{ color: '#f6f6f6' }}>Listo</Text>
+							</TouchableOpacity>
 						</View>
 					</View>
 				</Modal>
@@ -271,11 +271,18 @@ export default function Register() {
 									borderRadius: 5,
 								}}
 							/>
-							<Button
-								title='Listo'
-								color={'#000'}
+							<TouchableOpacity
+								style={{
+									borderRadius: 5,
+									backgroundColor: '#000',
+									paddingVertical: 8,
+									paddingHorizontal: 15,
+									alignItems: 'center'
+								}}
 								onPress={handleCode}
-							/>
+							>
+								<Text style={{ color: '#f6f6f6' }}>Listo</Text>
+							</TouchableOpacity>
 						</View>
 					</View>
 				</Modal>

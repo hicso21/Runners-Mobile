@@ -4,21 +4,23 @@ import { Dimensions } from "react-native";
 const vw = Dimensions.get('window').width / 100
 const vh = Dimensions.get('window').height / 100
 
-const ICONS_SIZE = 9*vw
+const ICONS_SIZE = 8*vw
 
 const style = StyleSheet.create({
   container: {
     backgroundColor: '#000',
-    height: 6.2*vh,
-    maxHeight: 6.2*vh,
+    height: 7*vh,
+    maxHeight: 7*vh,
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingBottom: 5
   },
   iconContainer:{
     width: '20%',
+    height: '100%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   icons: {
     color: '#f6f6f6',

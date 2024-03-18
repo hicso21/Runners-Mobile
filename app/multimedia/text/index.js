@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
 	ScrollView,
 	StyleSheet,
@@ -33,7 +33,7 @@ export default function () {
 
 	const fetch = async () => {
 		const { data, error } = await getTexts();
-		console.log(data)
+		console.log(data);
 		if (error)
 			return Toast.show({
 				type: 'error',
@@ -43,9 +43,11 @@ export default function () {
 		else Toast.show({ type: 'info', text1: 'Aún no hay videos' });
 	};
 
-	useEffect(() => {
-		fetch();
-	}, []);
+	useEffect(
+		useCallback(() => {
+			fetch();
+		}, [])
+	);
 
 	return (
 		<View style={styles.view}>
@@ -68,7 +70,9 @@ export default function () {
 						alignItems: 'center',
 					}}
 				>
-					<Text style={styles.itemText}>{texts[page]?.data?.name}</Text>
+					<Text style={styles.itemText}>
+						{texts[page]?.data?.name}
+					</Text>
 				</View>
 				<ScrollView>
 					<Text style={styles.itemDescription}>

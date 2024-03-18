@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { Text, View, Button, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 export default function Chat() {
 	const router = useRouter();

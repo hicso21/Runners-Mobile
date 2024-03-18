@@ -5,7 +5,6 @@ import {
 	Text,
 	TextInput,
 	View,
-	Button,
 	TouchableOpacity,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -31,42 +30,43 @@ export default function Login() {
 		setData('language', language);
 	};
 
+	const handleRecovery = () => router.push('/recovery');
+
 	const handleLogin = async () => {
-		// await login(email, password)
 		if (!email || !password)
 			return Toast.show({
 				type: 'info',
 				text1: 'Recuerda!',
 				text2: 'Debes ingresar tus datos para poder iniciar sesión',
 			});
-		await login(email, password)
-			.then((response) => {
-				if (
-					response.data ==
-					'There is no runner with that email address.'
-				)
-					return Toast.show({
-						type: 'error',
-						text1: 'Error',
-						text2: 'No se encontró ningún usuario con ese correo electrónico.',
-					});
-				Toast.show({
-					type: 'success',
-					text1: 'Genial!',
-					text2: 'Tu inicio de sesión fue correcto.',
-				});
-				setData('user', response.data);
-				setTimeout(() => {
-					router.push('/home');
-				}, 1000);
-			})
-			.catch((err) => {
-				Toast.show({
-					type: 'error',
-					text1: 'Error',
-					text2: 'Contraseña incorrecta.',
-				});
+		const response = await login(email, password);
+		if (response.data == 'There is no runner with that email address.')
+			return Toast.show({
+				type: 'error',
+				text1: 'Error',
+				text2: 'No se encontró ningún usuario con ese correo electrónico.',
 			});
+		if (response.data == 'Incorrect Password.')
+			return Toast.show({
+				type: 'error',
+				text1: 'Error',
+				text2: 'La contraseña es errónea.',
+			});
+		if (response.error)
+			return Toast.show({
+				type: 'error',
+				text1: 'Ocurrió un error en el servidor.',
+				text2: 'Por favor contacta nuestro equipo',
+			});
+		Toast.show({
+			type: 'success',
+			text1: 'Genial!',
+			text2: 'Tu inicio de sesión fue correcto.',
+		});
+		setData('user', response.data);
+		setTimeout(() => {
+			router.push('/home');
+		}, 1000);
 	};
 
 	const handleRegister = async () => {
@@ -139,6 +139,13 @@ export default function Login() {
 							onChangeText={setPassword}
 							style={styles.input}
 						/>
+					</View>
+					<View>
+						<TouchableOpacity onPress={handleRecovery}>
+							<Text style={{ color: '#f6f6f6' }}>
+								Olvidé mi contraseña
+							</Text>
+						</TouchableOpacity>
 					</View>
 				</View>
 				<View style={{ alignItems: 'center' }}>

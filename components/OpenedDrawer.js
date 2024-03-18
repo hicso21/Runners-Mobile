@@ -18,8 +18,8 @@ import clearData from '../utils/AsyncStorage/clearData.js';
 export default function OpenedDrawer() {
 	const [redirectButtons, setRedirectButtons] = useState([
 		// { id: 0, text: 'PERFIL', route: '/profile' },
-		{ id: 1, text: 'ACTIVIDADES', route: '/activities' },
-		{ id: 2, text: 'FREC. CARDIACA', route: '/frecuency' },
+		// { id: 1, text: 'ACTIVIDADES', route: '/activities' },
+		// { id: 2, text: 'FREC. CARDIACA', route: '/frecuency' },
 		// { id: 3, text: 'ESTADO DE ENTRENO', route: '/status' },
 		// { id: 4, text: 'VO2 MAX', route: '/vo2' },
 		{ id: 5, text: 'SINCRONIZAR DISP', route: '/sync' },
