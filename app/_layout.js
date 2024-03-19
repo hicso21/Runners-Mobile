@@ -14,6 +14,7 @@ import styles from '../styles/Views/Layout.js';
 import routes from '../utils/constants/routes.js';
 import stripeKeys from '../utils/constants/stripeKeys.js';
 import { usePreventScreenCapture } from 'expo-screen-capture';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const pathToExclude = [
 	'/login',
@@ -21,14 +22,14 @@ const pathToExclude = [
 	'/prices',
 	'/marchView',
 	'/redirect',
-	'/recovery'
+	'/recovery',
 ];
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
 export default function RootLayout() {
 	const path = usePathname();
-	// usePreventScreenCapture();
+	usePreventScreenCapture();
 
 	/* Stripe */
 	// const { handleURLCallback } = useStripe();
@@ -64,8 +65,9 @@ export default function RootLayout() {
 	return (
 		<>
 			<PaperProvider>
-				<Provider store={store}>
-					{/* <StripeProvider
+				<SafeAreaProvider>
+					<Provider store={store}>
+						{/* <StripeProvider
 						publishableKey={stripeKeys.development_publishable_key}
 						merchantIdentifier='merchant.com.delaf'
 					> */}
@@ -97,8 +99,9 @@ export default function RootLayout() {
 								path.includes(item)
 							) && <FooterNavigator />}
 						</View>
-					{/* </StripeProvider> */}
-				</Provider>
+						{/* </StripeProvider> */}
+					</Provider>
+				</SafeAreaProvider>
 			</PaperProvider>
 			<Toast />
 		</>

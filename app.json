@@ -2,7 +2,7 @@
 	"expo": {
 		"name": "delaf",
 		"slug": "delaf",
-		"version": "1.0.0",
+		"version": "1.1.0",
 		"orientation": "portrait",
 		"icon": "./assets/DELAF.png",
 		"scheme": "myapp",
@@ -46,7 +46,17 @@
 			"output": "static",
 			"favicon": "./assets/DELAF.png"
 		},
-		"plugins": ["expo-router"],
+		"plugins": [
+			"expo-router",
+			[
+				"expo-build-properties",
+				{
+					"ios": {
+						"buildTarget": "15.0"
+					}
+				}
+			]
+		],
 		"experiments": {
 			"typedRoutes": true
 		},
