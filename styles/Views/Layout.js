@@ -5,7 +5,7 @@ const vh = Dimensions.get('screen').height / 100;
 
 const styles = StyleSheet.create({
 	view: {
-		height: 100*vh - 4.9*vh,
+		flex: 1,
 	},
 });
 

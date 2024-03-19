@@ -2,7 +2,7 @@ import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
 import { usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect } from 'react';
-import { BackHandler, Linking, LogBox, View } from 'react-native';
+import { BackHandler, Linking, LogBox, SafeAreaView, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
@@ -14,7 +14,10 @@ import styles from '../styles/Views/Layout.js';
 import routes from '../utils/constants/routes.js';
 import stripeKeys from '../utils/constants/stripeKeys.js';
 import { usePreventScreenCapture } from 'expo-screen-capture';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+	SafeAreaProvider,
+	useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 const pathToExclude = [
 	'/login',
@@ -71,7 +74,7 @@ export default function RootLayout() {
 						publishableKey={stripeKeys.development_publishable_key}
 						merchantIdentifier='merchant.com.delaf'
 					> */}
-						<View style={styles.view}>
+						<SafeAreaView style={styles.view}>
 							<StatusBar />
 							<Drawer
 								drawerContent={() => <OpenedDrawer />}
@@ -98,7 +101,7 @@ export default function RootLayout() {
 							{!pathToExclude.some((item) =>
 								path.includes(item)
 							) && <FooterNavigator />}
-						</View>
+						</SafeAreaView>
 						{/* </StripeProvider> */}
 					</Provider>
 				</SafeAreaProvider>
